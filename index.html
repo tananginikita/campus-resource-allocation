@@ -178,6 +178,7 @@ function requestRoom() {
         alert("Please enter a time.");
         return;
     }
+    addRequest("Room 101", name, date, time);
 
     document.getElementById("room101Status").innerText = "● Requested";
     document.getElementById("room101Status").className = "requested";
@@ -189,6 +190,7 @@ function requestRoom() {
         "\nDate: " + date +
         "\nTime: " + time
     );
+    
 }
 
 
@@ -207,12 +209,14 @@ function requestRoom102() {
         return;
     }
 
+
     const time = prompt("Enter the time:");
 
     if (!time) {
         alert("Please enter a time.");
         return;
     }
+    addRequest("Room 102", name, date, time);
 
     alert(
         "Room request submitted successfully! ✅\n\n" +
@@ -221,6 +225,7 @@ function requestRoom102() {
         "\nDate: " + date +
         "\nTime: " + time
     );
+
 }
 
 
@@ -245,6 +250,7 @@ function requestLab() {
         alert("Please enter a time.");
         return;
     }
+    addRequest("Computer Lab 1", name, date, time);
 
     alert(
         "Lab request submitted successfully! ✅\n\n" +
@@ -270,7 +276,18 @@ function searchFacilities() {
         }
     });
 }
+function addRequest(facility, name, date, time) {
+    const history = document.getElementById("requestHistory");
 
+    history.innerHTML = `
+        <h3>📋 Request Submitted</h3>
+        <p>👤 <b>Student:</b> ${name}</p>
+        <p>🏫 <b>Facility:</b> ${facility}</p>
+        <p>📅 <b>Date:</b> ${date}</p>
+        <p>🕐 <b>Time:</b> ${time}</p>
+        <p class="requested">🟠 Status: Requested</p>
+    `;
+}
     </script>
 </body>
 </html>
