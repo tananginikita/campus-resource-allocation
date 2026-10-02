@@ -155,6 +155,26 @@
 <div id="requestHistory" class="card">
     <p>No requests yet.</p>
 </div>
+    <h2>👨‍🏫 Admin Dashboard</h2>
+
+<div class="card">
+    <h3>Room 101</h3>
+    <p>Requested by: Student</p>
+    <p>📅 Date: 10/10/2026</p>
+    <p>🕐 Time: 2:00 PM</p>
+
+    <button class="button" onclick="approveRequest()">
+        ✅ Approve
+    </button>
+
+    <button class="button" onclick="rejectRequest()">
+        ❌ Reject
+    </button>
+
+    <p id="adminStatus" class="requested">
+        🟠 Pending Approval
+    </p>
+</div>
     <script>
 
 function requestRoom() {
@@ -287,6 +307,15 @@ function addRequest(facility, name, date, time) {
         <p>🕐 <b>Time:</b> ${time}</p>
         <p class="requested">🟠 Status: Requested</p>
     `;
+}
+        function approveRequest() {
+    document.getElementById("adminStatus").innerText =
+        "🟢 Request Approved";
+}
+
+function rejectRequest() {
+    document.getElementById("adminStatus").innerText =
+        "🔴 Request Rejected";
 }
     </script>
 </body>
