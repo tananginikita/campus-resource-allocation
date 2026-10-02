@@ -1,1 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>CampusConnect - Student</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f4f7fb;
+            color: #172554;
+        }
+
+        header {
+            background: white;
+            padding: 18px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px #ddd;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 25px;
+        }
+
+        .welcome {
+            background: #dbeafe;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px #ddd;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 13px;
+            margin: 8px 0 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 13px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .pending {
+            color: orange;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            .button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🏫 CampusConnect</div>
+    <div>👨‍🎓 Student</div>
+</header>
+
+<div class="container">
+
+    <div class="welcome">
+        <h1>Welcome, Student 👋</h1>
+        <p>Request a classroom, laboratory or seminar hall.</p>
+    </div>
+
+    <div class="card">
+
+        <h2>📝 New Facility Request</h2>
+
+        <label>Student Name</label>
+        <input type="text" id="studentName" placeholder="Enter your name">
+
+        <label>Facility</label>
+        <select id="facility">
+            <option value="">Select facility</option>
+
+            <option>CBCR - 01</option>
+            <option>CBCR - 02</option>
+            <option>CBCR - 03</option>
+            <option>CBCR - 04</option>
+            <option>CBCR - 05</option>
+            <option>CBCR - 06 (MBA Building)</option>
+            <option>CBCR - 07 (MBA Building)</option>
+            <option>CBCR - 08 (Seminar Hall)</option>
+
+            <option>Lab 1</option>
+            <option>Lab 2</option>
+            <option>Lab 3</option>
+            <option>Lab 4</option>
+            <option>Lab 5</option>
+            <option>Lab 6</option>
+        </select>
+
+        <label>Date</label>
+        <input type="date" id="requestDate">
+
+        <label>Start Time</label>
+        <input type="time" id="startTime">
+
+        <label>End Time</label>
+        <input type="time" id="endTime">
+
+        <label>Number of Students</label>
+        <input type="number" id="studentCount" placeholder="e.g. 40">
+
+        <label>Reason / Purpose</label>
+        <textarea
+            id="reason"
+            rows="3"
+            placeholder="Why do you need this facility?"
+        ></textarea>
+
+        <button class="button" onclick="submitRequest()">
+            📤 Submit Request
+        </button>
+
+    </div>
+
+    <div class="card">
+
+        <h2>📋 My Requests</h2>
+
+        <div id="myRequests">
+            <p>No requests submitted yet.</p>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function submitRequest() {
+
+    const name = document.getElementById("studentName").value;
+    const facility = document.getElementById("facility").value;
+    const date = document.getElementById("requestDate").value;
+    const start = document.getElementById("startTime").value;
+    const end = document.getElementById("endTime").value;
+    const students = document.getElementById("studentCount").value;
+    const reason = document.getElementById("reason").value;
+
+    if (!name || !facility || !date || !start || !end || !students || !reason) {
+        alert("Please fill all the fields.");
+        return;
+    }
+
+    const request = {
+        name: name,
+        facility: facility,
+        date: date,
+        start: start,
+        end: end,
+        students: students,
+        reason: reason,
+        status: "Pending"
+    };
+
+    localStorage.setItem(
+        "campusRequest",
+        JSON.stringify(request)
+    );
+
+    displayRequest();
+
+    alert("Request submitted successfully! ✅");
+}
+
+
+function displayRequest() {
+
+    const data = localStorage.getItem("campusRequest");
+
+    if (!data) {
+        return;
+    }
+
+    const request = JSON.parse(data);
+
+    document.getElementById("myRequests").innerHTML = `
+        <h3>🏫 ${request.facility}</h3>
+
+        <p>👤 Student: ${request.name}</p>
+
+        <p>📅 Date: ${request.date}</p>
+
+        <p>🕐 Time: ${request.start} - ${request.end}</p>
+
+        <p>👥 Students: ${request.students}</p>
+
+        <p>📝 Purpose: ${request.reason}</p>
+
+        <p class="pending">
+            🟠 Status: ${request.status}
+        </p>
+    `;
+}
+
+displayRequest();
+
+</script>
+
+</body>
+</html>
