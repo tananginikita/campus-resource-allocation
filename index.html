@@ -6,6 +6,10 @@
     <title>CampusConnect</title>
 
     <style>
+        .requested {
+    color: orange;
+    font-weight: bold;
+        }
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -125,7 +129,7 @@
         <div class="card">
             <h3>🏫 Room 101</h3>
             <p>Capacity: 60 students</p>
-            <p class="available">● Available</p>
+            <p id="room101Status" class="available">● Available</p>
             <button class="button" onclick="requestRoom()">Request Room</button>
         </div>
 
@@ -169,7 +173,8 @@ function requestRoom() {
         return;
     }
 
-    alert(
+    alert(document.getElementById("room101Status").innerText = "● Requested";
+document.getElementById("room101Status").className = "requested";
         "Request submitted successfully! ✅\n\n" +
         "Student: " + name +
         "\nRoom: 101" +
