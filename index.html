@@ -145,9 +145,41 @@
     </div>
 
 </div>
-<script>
-    function requestRoom() 
-    function searchFacilities() {
+    <script>
+
+function requestRoom() {
+    const name = prompt("Enter your name:");
+
+    if (!name) {
+        alert("Please enter your name.");
+        return;
+    }
+
+    const date = prompt("Enter the date (e.g. 10/10/2026):");
+
+    if (!date) {
+        alert("Please enter a date.");
+        return;
+    }
+
+    const time = prompt("Enter the time (e.g. 2:00 PM):");
+
+    if (!time) {
+        alert("Please enter a time.");
+        return;
+    }
+
+    alert(
+        "Request submitted successfully! ✅\n\n" +
+        "Student: " + name +
+        "\nRoom: 101" +
+        "\nDate: " + date +
+        "\nTime: " + time
+    );
+}
+
+
+function searchFacilities() {
     const search = document.getElementById("searchInput").value.toLowerCase();
     const cards = document.querySelectorAll(".card");
 
@@ -160,37 +192,8 @@
             card.style.display = "none";
         }
     });
-    }
-    {
-        const name = prompt("Enter your name:");
-        
-        if (!name) {
-            alert("Please enter your name.");
-            return;
-        }
+}
 
-        const date = prompt("Enter the date (e.g. 10/10/2026):");
-
-        if (!date) {
-            alert("Please enter a date.");
-            return;
-        }
-
-        const time = prompt("Enter the time (e.g. 2:00 PM):");
-
-        if (!time) {
-            alert("Please enter a time.");
-            return;
-        }
-
-        alert(
-            "Request submitted successfully! ✅\n\n" +
-            "Student: " + name +
-            "\nRoom: 101" +
-            "\nDate: " + date +
-            "\nTime: " + time
-        );
-    }
-</script>
+            </script>
 </body>
 </html>
