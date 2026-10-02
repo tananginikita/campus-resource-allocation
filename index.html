@@ -301,8 +301,7 @@
     </p>
 </div>
     <script>
-
-function requestRoom() {
+        function requestFacility(facility) {
     const name = prompt("Enter your name:");
 
     if (!name) {
@@ -317,175 +316,33 @@ function requestRoom() {
         return;
     }
 
-    const time = prompt("Enter the time (e.g. 2:00 PM):");
+    const startTime = prompt("Enter start time (e.g. 10:00 AM):");
 
-    if (!time) {
-        alert("Please enter a time.");
-        return;
-    }
-    addRequest("Room 101", name, date, time);
-
-    document.getElementById("room101Status").innerText = "● Requested";
-    document.getElementById("room101Status").className = "requested";
-
-    alert(
-        "Request submitted successfully! ✅\n\n" +
-        "Student: " + name +
-        "\nRoom: 101" +
-        "\nDate: " + date +
-        "\nTime: " + time
-    );
-    
-}
-
-
-function requestRoom102() {
-    const name = prompt("Enter your name:");
-
-    if (!name) {
-        alert("Please enter your name.");
+    if (!startTime) {
+        alert("Please enter a start time.");
         return;
     }
 
-    const date = prompt("Enter the date:");
+    const endTime = prompt("Enter end time (e.g. 12:00 PM):");
 
-    if (!date) {
-        alert("Please enter a date.");
+    if (!endTime) {
+        alert("Please enter an end time.");
         return;
     }
 
+    const students = prompt("How many students will use the facility?");
 
-    const time = prompt("Enter the time:");
-
-    if (!time) {
-        alert("Please enter a time.");
+    if (!students) {
+        alert("Please enter the number of students.");
         return;
     }
-    addRequest("Room 102", name, date, time);
 
-    alert(
-        "Room request submitted successfully! ✅\n\n" +
-        "Student: " + name +
-        "\nRoom: 102" +
-        "\nDate: " + date +
-        "\nTime: " + time
+    const reason = prompt(
+        "Why do you need this facility?\nExample: Lecture, project work, seminar, club activity"
     );
 
-}
-
-
-function requestLab() {
-    const name = prompt("Enter your name:");
-
-    if (!name) {
-        alert("Please enter your name.");
-        return;
-    }
-
-    const date = prompt("Enter the date:");
-
-    if (!date) {
-        alert("Please enter a date.");
-        return;
-    }
-
-    const time = prompt("Enter the time:");
-
-    if (!time) {
-        alert("Please enter a time.");
-        return;
-    }
-    addRequest("Computer Lab 1", name, date, time);
-
-    alert(
-        "Lab request submitted successfully! ✅\n\n" +
-        "Student: " + name +
-        "\nFacility: Computer Lab 1" +
-        "\nDate: " + date +
-        "\nTime: " + time
-    );
-}
-
-
-function searchFacilities() {
-    const search = document.getElementById("searchInput").value.toLowerCase();
-    const cards = document.querySelectorAll(".card");
-
-    cards.forEach(function(card) {
-        const text = card.innerText.toLowerCase();
-
-        if (text.includes(search)) {
-            card.style.display = "block";
-        } else {
-            card.style.display = "none";
-        }
-    });
-}
-function addRequest(facility, name, date, time) {
-    const history = document.getElementById("requestHistory");
-
-    history.innerHTML = `
-        <h3>📋 Request Submitted</h3>
-        <p>👤 <b>Student:</b> ${name}</p>
-        <p>🏫 <b>Facility:</b> ${facility}</p>
-        <p>📅 <b>Date:</b> ${date}</p>
-        <p>🕐 <b>Time:</b> ${time}</p>
-        <p class="requested">🟠 Status: Requested</p>
-    `;
-}
-        function approveRequest() {
-    document.getElementById("adminStatus").innerText =
-        "🟢 Request Approved";
-}
-
-function rejectRequest() {
-    document.getElementById("adminStatus").innerText =
-        "🔴 Request Rejected";
-}
-        function findRoom() {
-    const students = Number(
-        document.getElementById("studentCount").value
-    );
-
-    const result = document.getElementById("roomRecommendation");
-
-    if (!students || students <= 0) {
-        result.innerText = "Please enter a valid number of students.";
-        return;
-    }
-
-    if (students <= 45) {
-        result.innerText =
-            "✅ Recommended: Room 102 (Capacity: 45 students)";
-    } 
-    else if (students <= 60) {
-        result.innerText =
-            "✅ Recommended: Room 101 (Capacity: 60 students)";
-    } 
-    else {
-        result.innerText =
-            "❌ No suitable room is currently available.";
-    }
-        }
-        function requestFacility(facility) {
-    const name = prompt("Enter your name:");
-
-    if (!name) {
-        alert("Please enter your name.");
-        return;
-    }
-
-    const date = prompt("Enter the date:");
-
-    if (!date) {
-        alert("Please enter a date.");
-        return;
-    }
-
-    const time = prompt("Enter the time:");
-
-    if (!time) {
-        alert("Please enter a time.");
+    if (!reason) {
+        alert("Please enter the reason for your request.");
         return;
     }
 
@@ -494,9 +351,12 @@ function rejectRequest() {
         "Student: " + name +
         "\nFacility: " + facility +
         "\nDate: " + date +
-        "\nTime: " + time
+        "\nTime: " + startTime + " - " + endTime +
+        "\nStudents: " + students +
+        "\nPurpose: " + reason
     );
         }
     </script>
+    
 </body>
 </html>
