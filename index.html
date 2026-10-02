@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>CampusConnect</title>
 
     <style>
-        .requested {
-    color: orange;
-    font-weight: bold;
+
+        * {
+            box-sizing: border-box;
         }
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -17,13 +20,18 @@
             color: #172554;
         }
 
+        /* HEADER */
+
         header {
             background: white;
-            padding: 20px;
+            padding: 18px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 2px 8px #ddd;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .logo {
@@ -32,11 +40,20 @@
             color: #2563eb;
         }
 
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* CONTAINER */
+
         .container {
             padding: 25px;
             max-width: 1100px;
             margin: auto;
         }
+
+        /* WELCOME */
 
         .welcome {
             background: #dbeafe;
@@ -49,6 +66,8 @@
             margin-top: 0;
         }
 
+        /* BUTTON */
+
         .button {
             background: #2563eb;
             color: white;
@@ -56,7 +75,32 @@
             padding: 12px 20px;
             border-radius: 8px;
             cursor: pointer;
+            font-size: 15px;
         }
+
+        .button:hover {
+            opacity: 0.9;
+        }
+
+        .faculty-button {
+            background: #16a34a;
+        }
+
+        /* SEARCH */
+
+        .search-box {
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+        }
+
+        /* CARDS */
 
         .cards {
             display: flex;
@@ -71,6 +115,7 @@
             flex: 1;
             min-width: 220px;
             box-shadow: 0 2px 8px #ddd;
+            margin-bottom: 15px;
         }
 
         .available {
@@ -78,313 +123,963 @@
             font-weight: bold;
         }
 
-        .occupied {
-            color: red;
+        .requested {
+            color: orange;
             font-weight: bold;
         }
-        .search-box {
-    margin-bottom: 20px;
-}
 
-.search-box input {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 15px;
-    font-size: 16px;
-    border: 2px solid #ddd;
-    border-radius: 10px;
-}
+        /* SMART ROOM FINDER */
 
-    <label>Number of students:</label>
-    <input type="number" id="studentCount" placeholder="e.g. 40">
+        .finder {
+            margin-top: 30px;
+        }
 
-    <button class="button" onclick="findRoom()">
-        🔍 Find Suitable Room
-    </button>
+        .finder input {
+            width: 100%;
+            padding: 13px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
 
-    <p id="roomRecommendation"></p>
-</div>
-        /* 📱 Responsive Design */
+        #roomRecommendation {
+            font-weight: bold;
+            margin-top: 15px;
+        }
 
-@media (max-width: 768px) {
+        /* REQUEST FORM */
 
-    header {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
-    }
+        .request-form {
+            display: none;
+            margin-top: 25px;
+        }
 
-    .container {
-        padding: 15px;
-    }
+        .request-form input,
+        .request-form select,
+        .request-form textarea {
+            width: 100%;
+            padding: 13px;
+            margin: 8px 0 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
 
-    .welcome {
-        padding: 20px;
-    }
+        .request-form label {
+            font-weight: bold;
+        }
 
-    .cards {
-        flex-direction: column;
-    }
+        /* STATUS */
 
-    .card {
-        width: 100%;
-        box-sizing: border-box;
-    }
+        .status {
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: inline-block;
+            font-weight: bold;
+        }
 
-    .button {
-        width: 100%;
-        padding: 14px;
-        font-size: 16px;
-    }
+        .pending {
+            color: #b45309;
+            background: #fef3c7;
+        }
 
-    .search-box input {
-        font-size: 16px;
-        padding: 14px;
-    }
+        /* MOBILE / TABLET */
 
-    h1 {
-        font-size: 26px;
-    }
+        @media (max-width: 768px) {
 
-    h2 {
-        font-size: 22px;
-    }
+            header {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
 
-    h3 {
-        font-size: 19px;
-    }
-}
+            .container {
+                padding: 15px;
+            }
+
+            .welcome {
+                padding: 20px;
+            }
+
+            .cards {
+                flex-direction: column;
+            }
+
+            .card {
+                width: 100%;
+            }
+
+            .button {
+                width: 100%;
+                padding: 14px;
+                font-size: 16px;
+            }
+
+            .header-buttons {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+
+            h3 {
+                font-size: 19px;
+            }
+        }
+
     </style>
 </head>
 
+
 <body>
 
+
+<!-- HEADER -->
+
 <header>
-    <div class="logo">🏫 CampusConnect</div>
-    <div>👤 Student</div>
+
+    <div class="logo">
+        🏫 CampusConnect
+    </div>
+
+    <div class="header-buttons">
+
+        <a href="student.html">
+            <button class="button">
+                👨‍🎓 Student Dashboard
+            </button>
+        </a>
+
+        <a href="faculty.html">
+            <button class="button faculty-button">
+                👨‍🏫 Faculty Dashboard
+            </button>
+        </a>
+
+    </div>
+
 </header>
+
 
 <div class="container">
 
-    <section class="welcome">
-        <h1>Welcome to CampusConnect 👋</h1>
-        <p>
-            Find available classrooms, labs and other college
-            facilities in real time.
-        </p>
-        <button class="button">Browse Available Rooms</button>
-    </section>
+
+<!-- WELCOME -->
+
+<section class="welcome">
+
+    <h1>
+        Welcome to CampusConnect 👋
+    </h1>
+
+    <p>
+        Find available classrooms, laboratories and
+        other college facilities easily.
+    </p>
+
+    <button
+        class="button"
+        onclick="scrollToFacilities()">
+
+        🔍 Browse Available Facilities
+
+    </button>
+
+</section>
+
+
+<!-- SEARCH -->
+
 <div class="search-box">
-    <input 
-        type="text" 
-        id="searchInput" 
-        placeholder="🔍 Search rooms or labs..."
+
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="🔍 Search classrooms or labs..."
         onkeyup="searchFacilities()"
     >
+
 </div>
-    <h2>Available Facilities</h2>
-    <h2>🏫 Available Facilities</h2>
+
+
+<!-- FACILITIES -->
+
+<h2 id="facilities">
+    🏫 Available Facilities
+</h2>
+
 
 <div class="cards">
 
-    <!-- Classrooms -->
+
+    <!-- CLASSROOMS -->
+
 
     <div class="card">
+
         <h3>🏫 CBCR - 01</h3>
+
         <p>Classroom</p>
-        <p class="available">● Available</p>
-        <button class="button" onclick="requestFacility('CBCR - 01')">
+
+        <p class="available">
+            ● Available
+        </p>
+
+        <button
+            class="button"
+            onclick="openRequestForm('CBCR - 01')">
+
             Request Classroom
+
         </button>
+
     </div>
 
+
     <div class="card">
+
         <h3>🏫 CBCR - 02</h3>
+
         <p>Classroom</p>
-        <p class="available">● Available</p>
-        <button class="button" onclick="requestFacility('CBCR - 02')">
+
+        <p class="available">
+            ● Available
+        </p>
+
+        <button
+            class="button"
+            onclick="openRequestForm('CBCR - 02')">
+
             Request Classroom
+
         </button>
+
     </div>
 
+
     <div class="card">
+
         <h3>🏫 CBCR - 03</h3>
+
         <p>Classroom</p>
-        <p class="available">● Available</p>
-        <button class="button" onclick="requestFacility('CBCR - 03')">
+
+        <p class="available">
+            ● Available
+        </p>
+
+        <button
+            class="button"
+            onclick="openRequestForm('CBCR - 03')">
+
             Request Classroom
+
         </button>
+
     </div>
 
+
     <div class="card">
+
         <h3>🏫 CBCR - 04</h3>
+
         <p>Classroom</p>
-        <p class="available">● Available</p>
-        <button class="button" onclick="requestFacility('CBCR - 04')">
+
+        <p class="available">
+            ● Available
+        </p>
+
+        <button
+            class="button"
+            onclick="openRequestForm('CBCR - 04')">
+
             Request Classroom
+
         </button>
+
     </div>
 
+
     <div class="card">
+
         <h3>🏫 CBCR - 05</h3>
+
         <p>Classroom</p>
-        <p class="available">● Available</p>
-        <button class="button" onclick="requestFacility('CBCR - 05')">
+
+        <p class="available">
+            ● Available
+        </p>
+
+        <button
+            class="button"
+            onclick="openRequestForm('CBCR - 05')">
+
             Request Classroom
+
         </button>
+
     </div>
 
+
     <div class="card">
+
         <h3>🏫 CBCR - 06</h3>
+
         <p>Classroom</p>
+
         <p>MBA Building</p>
-        <p class="available">● Available</p>
-        <button class="button" onclick="requestFacility('CBCR - 06')">
+
+        <p class="available">
+            ● Available
+        </p>
+
+        <button
+            class="button"
+            onclick="openRequestForm('CBCR - 06')">
+
             Request Classroom
+
         </button>
+
     </div>
 
+
     <div class="card">
+
         <h3>🏫 CBCR - 07</h3>
+
         <p>Classroom</p>
+
         <p>MBA Building</p>
-        <p class="available">● Available</p>
-        <button class="button" onclick="requestFacility('CBCR - 07')">
+
+        <p class="available">
+            ● Available
+        </p>
+
+        <button
+            class="button"
+            onclick="openRequestForm('CBCR - 07')">
+
             Request Classroom
+
         </button>
+
     </div>
 
+
     <div class="card">
+
         <h3>🏛️ CBCR - 08</h3>
+
         <p>Seminar Hall</p>
-        <p class="available">● Available</p>
-        <button class="button" onclick="requestFacility('CBCR - 08')">
+
+        <p class="available">
+            ● Available
+        </p>
+
+        <button
+            class="button"
+            onclick="openRequestForm('CBCR - 08')">
+
             Request Seminar Hall
+
         </button>
+
     </div>
 
 
-    <!-- Labs -->
+    <!-- LABS -->
+
 
     <div class="card">
+
         <h3>💻 Lab 1</h3>
+
         <p>Laboratory</p>
-        <p class="available">● Available</p>
-        <button class="button" onclick="requestFacility('Lab 1')">
+
+        <p class="available">
+            ● Available
+        </p>
+
+        <button
+            class="button"
+            onclick="openRequestForm('Lab 1')">
+
             Request Lab
+
         </button>
+
     </div>
 
+
     <div class="card">
+
         <h3>💻 Lab 2</h3>
+
         <p>Laboratory</p>
-        <p class="available">● Available</p>
-        <button class="button" onclick="requestFacility('Lab 2')">
+
+        <p class="available">
+            ● Available
+        </p>
+
+        <button
+            class="button"
+            onclick="openRequestForm('Lab 2')">
+
             Request Lab
+
         </button>
+
     </div>
 
+
     <div class="card">
+
         <h3>💻 Lab 3</h3>
+
         <p>Laboratory</p>
-        <p class="available">● Available</p>
-        <button class="button" onclick="requestFacility('Lab 3')">
+
+        <p class="available">
+            ● Available
+        </p>
+
+        <button
+            class="button"
+            onclick="openRequestForm('Lab 3')">
+
             Request Lab
+
         </button>
+
     </div>
 
+
     <div class="card">
+
         <h3>💻 Lab 4</h3>
+
         <p>Laboratory</p>
-        <p class="available">● Available</p>
-        <button class="button" onclick="requestFacility('Lab 4')">
+
+        <p class="available">
+            ● Available
+        </p>
+
+        <button
+            class="button"
+            onclick="openRequestForm('Lab 4')">
+
             Request Lab
+
         </button>
+
     </div>
 
+
     <div class="card">
+
         <h3>💻 Lab 5</h3>
+
         <p>Laboratory</p>
-        <p class="available">● Available</p>
-        <button class="button" onclick="requestFacility('Lab 5')">
+
+        <p class="available">
+            ● Available
+        </p>
+
+        <button
+            class="button"
+            onclick="openRequestForm('Lab 5')">
+
             Request Lab
+
         </button>
+
     </div>
+
 
     <div class="card">
+
         <h3>💻 Lab 6</h3>
+
         <p>Laboratory</p>
-        <p class="available">● Available</p>
-        <button class="button" onclick="requestFacility('Lab 6')">
+
+        <p class="available">
+            ● Available
+        </p>
+
+        <button
+            class="button"
+            onclick="openRequestForm('Lab 6')">
+
             Request Lab
+
         </button>
+
     </div>
 
-            </div>
 
 </div>
-    <h2>📋 My Requests</h2>
 
-<div id="requestHistory" class="card">
-    <p>No requests yet.</p>
+
+<!-- SMART ROOM FINDER -->
+
+<div class="card finder">
+
+    <h2>
+        🤖 Smart Room Finder
+    </h2>
+
+    <p>
+        Find a suitable classroom based on the
+        number of students.
+    </p>
+
+    <label>
+        Number of students:
+    </label>
+
+    <input
+        type="number"
+        id="studentCount"
+        placeholder="e.g. 40"
+    >
+
+    <button
+        class="button"
+        onclick="findRoom()">
+
+        🔍 Find Suitable Room
+
+    </button>
+
+    <p id="roomRecommendation"></p>
+
 </div>
-    <script>
-        function requestFacility(facility) {
-    const name = prompt("Enter your name:");
 
-    if (!name) {
-        alert("Please enter your name.");
+
+<!-- REQUEST FORM -->
+
+<div
+    class="card request-form"
+    id="requestForm">
+
+    <h2>
+        📝 Facility Request
+    </h2>
+
+    <p>
+        <strong>Selected Facility:</strong>
+        <span id="selectedFacility"></span>
+    </p>
+
+
+    <label>
+        Student Name
+    </label>
+
+    <input
+        type="text"
+        id="requestName"
+        placeholder="Enter your name"
+    >
+
+
+    <label>
+        Date
+    </label>
+
+    <input
+        type="date"
+        id="requestDate"
+    >
+
+
+    <label>
+        Start Time
+    </label>
+
+    <input
+        type="time"
+        id="requestStartTime"
+    >
+
+
+    <label>
+        End Time
+    </label>
+
+    <input
+        type="time"
+        id="requestEndTime"
+    >
+
+
+    <label>
+        Number of Students
+    </label>
+
+    <input
+        type="number"
+        id="requestStudents"
+        placeholder="e.g. 40"
+    >
+
+
+    <label>
+        Reason / Purpose
+    </label>
+
+    <textarea
+        id="requestReason"
+        rows="4"
+        placeholder="Why do you need this facility?"
+    ></textarea>
+
+
+    <button
+        class="button"
+        onclick="submitRequest()">
+
+        📤 Submit Request
+
+    </button>
+
+</div>
+
+
+<!-- REQUEST HISTORY -->
+
+<h2>
+    📋 My Requests
+</h2>
+
+
+<div
+    id="requestHistory"
+    class="card">
+
+    <p>
+        No requests yet.
+    </p>
+
+</div>
+
+
+</div>
+
+
+<script>
+
+
+/* SCROLL TO FACILITIES */
+
+function scrollToFacilities() {
+
+    document
+        .getElementById("facilities")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+
+/* SEARCH */
+
+function searchFacilities() {
+
+    const search =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+    const cards =
+        document.querySelectorAll(".cards .card");
+
+
+    cards.forEach(function(card) {
+
+        const text =
+            card.innerText.toLowerCase();
+
+        if (text.includes(search)) {
+
+            card.style.display = "block";
+
+        } else {
+
+            card.style.display = "none";
+
+        }
+
+    });
+
+}
+
+
+/* OPEN REQUEST FORM */
+
+function openRequestForm(facility) {
+
+    document
+        .getElementById("requestForm")
+        .style.display = "block";
+
+
+    document
+        .getElementById("selectedFacility")
+        .innerText = facility;
+
+
+    document
+        .getElementById("requestForm")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+
+/* SUBMIT REQUEST */
+
+function submitRequest() {
+
+    const name =
+        document
+        .getElementById("requestName")
+        .value;
+
+    const facility =
+        document
+        .getElementById("selectedFacility")
+        .innerText;
+
+    const date =
+        document
+        .getElementById("requestDate")
+        .value;
+
+    const start =
+        document
+        .getElementById("requestStartTime")
+        .value;
+
+    const end =
+        document
+        .getElementById("requestEndTime")
+        .value;
+
+    const students =
+        document
+        .getElementById("requestStudents")
+        .value;
+
+    const reason =
+        document
+        .getElementById("requestReason")
+        .value;
+
+
+    if (
+        !name ||
+        !facility ||
+        !date ||
+        !start ||
+        !end ||
+        !students ||
+        !reason
+    ) {
+
+        alert(
+            "Please fill all the fields before submitting."
+        );
+
         return;
+
     }
 
-    const date = prompt("Enter the date (e.g. 10/10/2026):");
 
-    if (!date) {
-        alert("Please enter a date.");
+    if (end <= start) {
+
+        alert(
+            "End time must be later than start time."
+        );
+
         return;
+
     }
 
-    const startTime = prompt("Enter start time (e.g. 10:00 AM):");
 
-    if (!startTime) {
-        alert("Please enter a start time.");
-        return;
-    }
+    const request = {
 
-    const endTime = prompt("Enter end time (e.g. 12:00 PM):");
+        name: name,
 
-    if (!endTime) {
-        alert("Please enter an end time.");
-        return;
-    }
+        facility: facility,
 
-    const students = prompt("How many students will use the facility?");
+        date: date,
 
-    if (!students) {
-        alert("Please enter the number of students.");
-        return;
-    }
+        start: start,
 
-    const reason = prompt(
-        "Why do you need this facility?\nExample: Lecture, project work, seminar, club activity"
+        end: end,
+
+        students: students,
+
+        reason: reason,
+
+        status: "Pending"
+
+    };
+
+
+    localStorage.setItem(
+        "campusRequest",
+        JSON.stringify(request)
     );
 
-    if (!reason) {
-        alert("Please enter the reason for your request.");
-        return;
-    }
+
+    displayRequest();
+
 
     alert(
-        "Request submitted successfully! ✅\n\n" +
-        "Student: " + name +
-        "\nFacility: " + facility +
-        "\nDate: " + date +
-        "\nTime: " + startTime + " - " + endTime +
-        "\nStudents: " + students +
-        "\nPurpose: " + reason
+        "Request submitted successfully! ✅"
     );
-        }
-    </script>
-    
+
+}
+
+
+/* DISPLAY REQUEST */
+
+function displayRequest() {
+
+    const data =
+        localStorage.getItem("campusRequest");
+
+
+    if (!data) {
+
+        return;
+
+    }
+
+
+    const request =
+        JSON.parse(data);
+
+
+    document
+        .getElementById("requestHistory")
+        .innerHTML = `
+
+        <h3>
+            🏫 ${request.facility}
+        </h3>
+
+        <p>
+            👤 <strong>Student:</strong>
+            ${request.name}
+        </p>
+
+        <p>
+            📅 <strong>Date:</strong>
+            ${request.date}
+        </p>
+
+        <p>
+            🕐 <strong>Time:</strong>
+            ${request.start} -
+            ${request.end}
+        </p>
+
+        <p>
+            👥 <strong>Students:</strong>
+            ${request.students}
+        </p>
+
+        <p>
+            📝 <strong>Purpose:</strong>
+            ${request.reason}
+        </p>
+
+        <p class="status pending">
+            🟠 Status: ${request.status}
+        </p>
+
+    `;
+
+}
+
+
+/* SMART ROOM FINDER */
+
+function findRoom() {
+
+    const students =
+        parseInt(
+            document
+            .getElementById("studentCount")
+            .value
+        );
+
+
+    const recommendation =
+        document
+        .getElementById("roomRecommendation");
+
+
+    if (!students || students <= 0) {
+
+        recommendation.innerText =
+            "Please enter a valid number of students.";
+
+        return;
+
+    }
+
+
+    if (students <= 30) {
+
+        recommendation.innerText =
+            "💡 Suggested facilities: Lab 1, Lab 2, Lab 3, Lab 4, Lab 5 or Lab 6.";
+
+    }
+
+    else if (students <= 45) {
+
+        recommendation.innerText =
+            "💡 Suggested classrooms: CBCR-02, CBCR-03, CBCR-04 or CBCR-05.";
+
+    }
+
+    else if (students <= 60) {
+
+        recommendation.innerText =
+            "💡 Suggested classrooms: CBCR-01 or another large available classroom.";
+
+    }
+
+    else {
+
+        recommendation.innerText =
+            "⚠️ No suitable facility found for this group size.";
+
+    }
+
+}
+
+
+/* LOAD REQUEST WHEN PAGE OPENS */
+
+displayRequest();
+
+
+</script>
+
 </body>
-</html>
+
+    </html>
