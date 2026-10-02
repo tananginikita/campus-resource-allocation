@@ -1,1 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>CampusConnect - Faculty</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f4f7fb;
+            color: #172554;
+        }
+
+        header {
+            background: white;
+            padding: 18px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px #ddd;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 25px;
+        }
+
+        .welcome {
+            background: #dbeafe;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        .request-card {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px #ddd;
+        }
+
+        .pending {
+            color: orange;
+            font-weight: bold;
+        }
+
+        .approved {
+            color: green;
+            font-weight: bold;
+        }
+
+        .rejected {
+            color: red;
+            font-weight: bold;
+        }
+
+        .button {
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            margin-right: 8px;
+            margin-top: 10px;
+        }
+
+        .approve {
+            background: #16a34a;
+        }
+
+        .reject {
+            background: #dc2626;
+        }
+
+        .refresh {
+            background: #2563eb;
+        }
+
+        @media (max-width: 768px) {
+
+            header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            .button {
+                width: 100%;
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        🏫 CampusConnect
+    </div>
+
+    <div>
+        👨‍🏫 Faculty / Admin
+    </div>
+
+</header>
+
+
+<div class="container">
+
+    <div class="welcome">
+
+        <h1>Faculty Dashboard 👋</h1>
+
+        <p>
+            Review and manage student facility requests.
+        </p>
+
+    </div>
+
+
+    <h2>📋 Student Requests</h2>
+
+
+    <div id="requests">
+
+        <p>
+            No requests available.
+        </p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function loadRequest() {
+
+    const data = localStorage.getItem("campusRequest");
+
+    const container = document.getElementById("requests");
+
+
+    if (!data) {
+
+        container.innerHTML = `
+            <div class="request-card">
+                <h3>📭 No Requests</h3>
+                <p>No student requests have been submitted yet.</p>
+            </div>
+        `;
+
+        return;
+    }
+
+
+    const request = JSON.parse(data);
+
+
+    container.innerHTML = `
+
+        <div class="request-card">
+
+            <h2>
+                🏫 ${request.facility}
+            </h2>
+
+            <p>
+                👤 <strong>Student:</strong>
+                ${request.name}
+            </p>
+
+            <p>
+                📅 <strong>Date:</strong>
+                ${request.date}
+            </p>
+
+            <p>
+                🕐 <strong>Time:</strong>
+                ${request.start} - ${request.end}
+            </p>
+
+            <p>
+                👥 <strong>Students:</strong>
+                ${request.students}
+            </p>
+
+            <p>
+                📝 <strong>Purpose:</strong>
+                ${request.reason}
+            </p>
+
+            <p id="status" class="${getStatusClass(request.status)}">
+                ${getStatusIcon(request.status)}
+                Status: ${request.status}
+            </p>
+
+
+            ${
+                request.status === "Pending"
+                ?
+                `
+                <button
+                    class="button approve"
+                    onclick="updateStatus('Approved')">
+                    ✅ Approve
+                </button>
+
+                <button
+                    class="button reject"
+                    onclick="updateStatus('Rejected')">
+                    ❌ Reject
+                </button>
+                `
+                :
+                ""
+            }
+
+        </div>
+    `;
+}
+
+
+function updateStatus(newStatus) {
+
+    const data = localStorage.getItem("campusRequest");
+
+    if (!data) {
+        return;
+    }
+
+
+    const request = JSON.parse(data);
+
+    request.status = newStatus;
+
+
+    localStorage.setItem(
+        "campusRequest",
+        JSON.stringify(request)
+    );
+
+
+    loadRequest();
+
+
+    alert(
+        "Request " +
+        newStatus.toLowerCase() +
+        " successfully! ✅"
+    );
+}
+
+
+function getStatusClass(status) {
+
+    if (status === "Approved") {
+        return "approved";
+    }
+
+    if (status === "Rejected") {
+        return "rejected";
+    }
+
+    return "pending";
+}
+
+
+function getStatusIcon(status) {
+
+    if (status === "Approved") {
+        return "🟢";
+    }
+
+    if (status === "Rejected") {
+        return "🔴";
+    }
+
+    return "🟠";
+}
+
+
+loadRequest();
+
+</script>
+
+</body>
+</html>
