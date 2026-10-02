@@ -175,7 +175,9 @@ function requestRoom() {
     }
 
     document.getElementById("room101Status").innerText = "● Requested";
-document.getElementById("room101Status").className = "requested";
+    document.getElementById("room101Status").className = "requested";
+
+    alert(
         "Request submitted successfully! ✅\n\n" +
         "Student: " + name +
         "\nRoom: 101" +
@@ -185,20 +187,38 @@ document.getElementById("room101Status").className = "requested";
 }
 
 
-function searchFacilities() {
-    const search = document.getElementById("searchInput").value.toLowerCase();
-    const cards = document.querySelectorAll(".card");
+function requestRoom102() {
+    const name = prompt("Enter your name:");
 
-    cards.forEach(function(card) {
-        const text = card.innerText.toLowerCase();
+    if (!name) {
+        alert("Please enter your name.");
+        return;
+    }
 
-        if (text.includes(search)) {
-            card.style.display = "block";
-        } else {
-            card.style.display = "none";
-        }
-    });
+    const date = prompt("Enter the date:");
+
+    if (!date) {
+        alert("Please enter a date.");
+        return;
+    }
+
+    const time = prompt("Enter the time:");
+
+    if (!time) {
+        alert("Please enter a time.");
+        return;
+    }
+
+    alert(
+        "Room request submitted successfully! ✅\n\n" +
+        "Student: " + name +
+        "\nRoom: 102" +
+        "\nDate: " + date +
+        "\nTime: " + time
+    );
 }
+
+
 function requestLab() {
     const name = prompt("Enter your name:");
 
@@ -228,37 +248,24 @@ function requestLab() {
         "\nDate: " + date +
         "\nTime: " + time
     );
+}
+
+
+function searchFacilities() {
+    const search = document.getElementById("searchInput").value.toLowerCase();
+    const cards = document.querySelectorAll(".card");
+
+    cards.forEach(function(card) {
+        const text = card.innerText.toLowerCase();
+
+        if (text.includes(search)) {
+            card.style.display = "block";
+        } else {
+            card.style.display = "none";
         }
-        function requestRoom102() {
-    const name = prompt("Enter your name:");
+    });
+}
 
-    if (!name) {
-        alert("Please enter your name.");
-        return;
-    }
-
-    const date = prompt("Enter the date:");
-
-    if (!date) {
-        alert("Please enter a date.");
-        return;
-    }
-
-    const time = prompt("Enter the time:");
-
-    if (!time) {
-        alert("Please enter a time.");
-        return;
-    }
-
-    alert(
-        "Room request submitted successfully! ✅\n\n" +
-        "Student: " + name +
-        "\nRoom: 102" +
-        "\nDate: " + date +
-        "\nTime: " + time
-    );
-        }
-            </script>
+    </script>
 </body>
 </html>
