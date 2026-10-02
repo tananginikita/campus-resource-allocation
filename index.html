@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusConnect</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f4f7fb;
+            color: #172554;
+        }
+
+        header {
+            background: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px #ddd;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .container {
+            padding: 25px;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .welcome {
+            background: #dbeafe;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        .welcome h1 {
+            margin-top: 0;
+        }
+
+        .button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .cards {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            flex: 1;
+            min-width: 220px;
+            box-shadow: 0 2px 8px #ddd;
+        }
+
+        .available {
+            color: green;
+            font-weight: bold;
+        }
+
+        .occupied {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🏫 CampusConnect</div>
+    <div>👤 Student</div>
+</header>
+
+<div class="container">
+
+    <section class="welcome">
+        <h1>Welcome to CampusConnect 👋</h1>
+        <p>
+            Find available classrooms, labs and other college
+            facilities in real time.
+        </p>
+        <button class="button">Browse Available Rooms</button>
+    </section>
+
+    <h2>Available Facilities</h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>🏫 Room 101</h3>
+            <p>Capacity: 60 students</p>
+            <p class="available">● Available</p>
+            <button class="button">Request Room</button>
+        </div>
+
+        <div class="card">
+            <h3>🏫 Room 102</h3>
+            <p>Capacity: 45 students</p>
+            <p class="occupied">● Occupied</p>
+        </div>
+
+        <div class="card">
+            <h3>💻 Computer Lab 1</h3>
+            <p>Capacity: 30 students</p>
+            <p class="available">● Available</p>
+            <button class="button">Request Lab</button>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
